@@ -1,0 +1,185 @@
+we can not use new, this with arrow function
+also arrow function cant be used as consructor 
+
+js ===================
+////
+
+express- 
+router level middleware
+
+var express=require('express')
+var router=express.Router();
+
+//app level middleware in express
+var app=express()
+
+app.use((req,res,next)=>{
+})
+app.get, app.put, app.post
+
+//error handling middleware
+app.use(err, req,res, next)
+//third party
+e.g. cookieparser 
+
+router.get('/',function(req, res){
+res.json(movies)
+})
+
+// Online Javascript Editor for free
+// Write, Edit and Run your Javascript code using JS Online Compiler
+    
+console.log("Welcome to Programiz!");
+var array= [1,44,67,56,9,32,50]
+var arrayEven=[];
+var arrayOdd=[];
+array.forEach((element)=>{
+    //console.log(element);
+    if(element % 2 ==0){
+        arrayEven.push(element+3)
+    }
+    else
+    arrayOdd.push(element+3)
+})
+
+//console.log(''arrayEven)
+//console.log(arrayOdd)
+
+var nestedArray= [2, [2,3],[1,[4,5]],5];
+var newArray=[]
+
+function plainArray(element,newArray){
+    if(typeof element === 'object' ){
+        element.forEach((e)=>{
+            if(typeof e === 'object'){
+               newArray=plainArray(e,newArray)
+            }
+            else
+            newArray.push(e)
+        })
+        return newArray;
+   }
+}
+nestedArray.forEach((element)=>{
+   if (typeof element === 'object'){
+       newArray=plainArray(element,newArray);
+   }
+   else
+   newArray.push(element);
+   /*
+    */
+}
+)
+console.log('newArray is ',newArray)
+
+
+
+
+
+
+
+
+
+
+
+
+==========================
+
+
+app.route('/'){
+
+
+
+}
+
+angular service- observable/ promise
+httpclient
+
+getUserService():Observable(){
+return http.get('request/getUser') ;
+}
+
+
+server side=
+
+return JSON(data)
+
+GET
+POST
+DELETE
+PUT
+PATCH
+
+200- status ok success
+201- status ok success & resource created at server side
+
+
+400 client side issue
+401- authorization not provided
+402- payment required 
+403- forbidden
+404- not avaibale
+
+500 server side issue
+
+
+
+v8
+
+events & callback
+webAPIs
+
+
+global execution context stack 
+
+1. console.log abc
+2. setTimeOut
+3. console log xyz
+
+
+callback queue = > 
+setTimeout, fetch
+
+priority/ micro event queue 
+
+setTimeout (0) 
+
+
+ng g c companyEmployees
+
+companyEmployees.component.ts
+-decorarot
+-lifecycle
+ ngoninit()
+ ngDestroy()
+ 
+-app.module.ts
+ declarations =[c1,c2,c3...]
+ imports
+ provider = []
+ 
+ 
+companyEmployees.component.css
+companyEmployees.component.html
+
+ decorator
+ property decorator
+ @Input (parent ->child) <child-app [data]="myvariable" ></
+ @Output (child ->parent) 
+ 
+ ts file of child=
+ @Output dataTobePushedToPArent =new EventEmitter()
+
+ dataTobePushedToPArent.emit(myData)
+ 
+
+ parentComponent.html
+ <child-app (dataTobePushedToPArent)= recieveData($event)>
+
+
+
+
+
+
+
+

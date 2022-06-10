@@ -1,0 +1,12 @@
+------------------------------
+immutable object 
+- an object's value can not be changed
+- once object is created
+- string class is immutable
+- class must me immutabe for such object
+
+----------------------------------
+immutable class
+- data fields must be private
+- no setters method
+- no getter method that returns the data field that is mutable (object whos content can be changed)

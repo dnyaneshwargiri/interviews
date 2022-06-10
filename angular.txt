@@ -1,0 +1,387 @@
+npm install -g typescript
+
+data binding-
+A. one way data binding-
+1. component to view
+  i. interpolation= {{}}
+  ii.style= [ngStyle]
+  iii.attribute binding [attr.datalink/ attr.updatedlink], [placeholder], [href]
+  iv. property binding=[ngClass], [innerHTML]
+
+2. view to component-
+  i.event based binding = (eventname)="function()" e.g. <button (click)="showAlert()"></button>,
+    <input (focus)="consoleLog()">
+   (submit)=""
+  
+
+B. Two way data binding
+   data flows from component to view and vice versa
+[(ngModel)]=""
+mostly two way data binding is used by formControls where we want to read the data from user and do some operations
+
+
+------------------------------
+reactive form
+-new FormGroup(name:new FormControl(),fullname:new FormControl())
+-[formGroup]= "employeeForm"
+-formControlName= "email"/"fullname"
+-import reactiveFormmodule in modules.ts
+-(submit)="mysubmit()"
+
+template driven form
+- #userForm="ngForm" (ngSubmit)="mycustommethod(userForm.value)"
+<input ngmodel name="employeeFullName">
+
+2 way binding
+[ngModel]="mypredefinedFullName"
+
+--------------------------------
+-dependecy injection- di is widely used design pattern in this pattern clasess are injected with required depedencies 
+rather than instatianting them seprately
+-multiple components have same dependecy acorss the project
+-e.g. mobile class is depedent on display class, camera class & processor class.
+-what was drawbacks- constrcutor changes cause incompatibility 
+ e.g. this.processor=new processor()
+      this.camer=new camera()
+-advantages
+ i. components are loosley coupled
+ ii. more flexible & robust, space to make changes as they are defined as parameter
+ iii. more efficient & modular
+-services in angular
+@Injectable
+ng g service myservice
+myMethodInService(){
+return "myMsgs"
+}
+
+in module.ts
+import myservice from "/myservice.ts";
+add it in [providers]=
+ 
+in app.component.ts
+import myservice from "./myservice.ts";
+class myComponent{
+ constructor(private ms: myservice){
+ }
+ ngOnInit():void{
+  this.msg=ms.myMethodInService();
+ }
+}
+-------------------------------------
+what are decoratores in angular
+=> they are design patterns/ function that add metadata gets called runtime
+class, property, method, parameter
+
+class= intent of classes @component, @Injectable, @Directive, @Pipe
+property= @input(parent to child), @output(child to parent)
+
+E.g.
+
+Input decorator code=
+app.component.ts = parent
+app.component.html
+<app-child [mydata]="mydataFromParent"> </app-child>
+
+child.component.ts= child
+
+import input from "@angular/core"
+
+@input() mydata:String;
+use {{mydata}} in child.component.html
+
+Output decorator=
+in child.component.ts
+
+import eventemitter, output from "@angular/core";
+@Output childoutputEvent= new EventEmitter()
+myMessage:string= "this is defined in child"
+ ngOnInit(){
+  this.childoutputEvent.emit(myMessage)
+ }
+
+in app.component.html
+<app-child (childOutputEvent)="showMessage()"><app-child>
+showMessage(){
+}
+
+method decorator=
+@HostBinding= > lets you set property on element that host directives
+@HostListner => lets you set property on element that listen to event property 
+ng g d stylingDivDirective
+
+
+parameter decorator=> used to implment dependency injection
+conructor(@Inject testService){
+}
+
+
+----------------------------------------------------
+ahead of the time (AOT)
+-all typescript & html code converted to javascript at the time of the build
+------------------------------------------------------
+what are components
+-must be declared in NgModule of module.ts
+-@component
+-implement lifecylce hook 
+------------------------------------------------
+pipe
+-data to transformed data
+- | upperCase, | argument using (:)
+- pure pipe=> if change is not detected pipes are not called, input remain same then output remain same, no internal state is used, single instance is maintained, 
+- impure pipe=> every time pipe is called regardless of change is there or not
+
+@pipe({
+name:"myPipe"
+pure:"true/false"})
+-pipeTransform interface is used to implment custom transform
+
+
+----------------------------------------------
+javascript- what is pure function
+-no state changes
+-no dependecny on external elements
+- always calling it with same input results in same ouptut
+-e.g. function add(a,b){
+  return a+b
+}
+-side effect free behaviour
+-doesnt change state , doesnt assign any value
+
+
+--------------------------------------------
+filters in angular
+-date, json, limitTo, filter, lowercase
+
+------------------------------------------
+lifecyle hooks
+-ngOnChanges
+-ngOnInit()
+-ngDoCheck()
+-ngAferContentInit()
+-ngAFterContenetCheck()'
+-ngAfterViewInit
+-ngAfterViewCheck
+-ngOnDestroy()
+
+
+
+
+--------------------------------------------
+aot vs jit
+-build time & during execution phase
+-faster rendering & dynamic compilation
+- --aot & default 
+-------------------------------------------
+@component
+-lifecycel
+-templateurl, selectors, styleurl
+-ngmodule declaration
+-----------------------------------------
+angular services provides reusable funciton
+-can be writen once and be injected
+-can avoid redundence
+
+--------------------------------------
+promises vs observable
+-single event at time & sequence of event 
+-single value at time & only executed if subscribed using subscribe()
+-not cancellable, executed immediately & are cancellable, can perform forEach, fiter, retry()
+-push errors to child promised & unsubscibes stops listening to responses
+
+---------------------------------------
+real DOM & virtual DOM
+- tree structure each object is part of DOM
+- angular uses regular dom with change detection
+
+-----------------------------------------
+how is testing achived in angular
+- angular uses jasmine to perform differnet test cases
+- jasimine allows o write different test cases
+- karma is a test runner  
+- karma used configuration file to set, report, result, testin framwork, start up 
+
+
+
+
+---------------------------------------------
+a[title="Home Page"]
+| value-newvalue
+class|=value-newvalue
+class~=contains word with space
+class^=startswith
+class$=endswith
+class*=anywhere
+
+class, target,href, id, title, lang
+
+border 2px solid #f56E
+
+@media screen and (max-width:480px){
+}
+
+
+src-
+app
+assets
+environment
+index.html
+main.ts
+polyfilss.ts
+styles.css
+typings.d.ts
+
+
+
+angular-cli.json => root, index, main, polyfills, environment, styles, outDir, assets
+package.json => name,script (ng build, ng serve, ng test, ng lint, ng e2e),dependency,devDependency, outdir
+tsconfig.json => "compileonsave": compiler option:{
+"baseUrl":
+"outDir" :
+"sourceMap" true
+"target":"es2022"
+"module":es2016
+}
+
+karma, jasmine, protractor=>
+jasmine -> protractor ->webdriver js->selenium ->browser ->angular app
+
+------------------------------------------------------------
+linting is a process to run a program that will analyse for potential error in a source code
+-pinpoint possible logical errors
+-static code convention discrpancy, formating discrepnacy
+
+
+----------------------
+handsons
+-reactive form
+-parent to child & vice versa data passing
+-observer and promise
+-lifecycle hook
+-create service
+-css code questions
+-js code question
+-routes code
+-----------------------------
+*ngIf=""
+
+----------------------------
+lifecylce hook
+best video=https://www.youtube.com/watch?v=kKtrHrciIVs
+
+child.ts
+
+import { Component, ContentChild, Input, SimpleChange } from '@angular/core';
+@Component({
+  selector: 'hello',
+  template: `<h1>Hello {{name}} && hello {{parentData}}!</h1>
+  <ng-content></ng-content>
+  `,
+  styles: [`h1 { font-family: Lato; }`]
+})
+export class HelloComponent  {
+  @Input() name: string;
+  @Input() parentData :string;
+  @ContentChild ('projectedContent'): any
+  myInterval;
+  cnt=0;
+  ngOnInit(){
+    console.log('child hello is created')
+    this.myInterval=setInterval(()=>{
+      this.cnt+=1;
+      //console.log(this.cnt);
+    },1000)
+  }
+  //cleaning utility, avoid memory leak
+  ngOnDestroy(){
+    clearInterval(this.myInterval);
+    console.log('child helo is destroyed')
+  }
+  //when changes made to parent
+  ngOnChanges(changes:SimpleChange){
+    console.log(changes['parentData']['currentValue'])
+    console.log('recieved a data from parent which is=',this.parentData);
+  }
+  //runs after every ngoninit// to detect changes
+  ngDoCheck(){
+  }
+  //called after first docheck
+  ngAferContentInit(){
+  }
+  //called after ngAferContentInit
+  ngAfterContentChecked(){
+  }
+  ngAfterViewInit(){
+  }
+  ngAfterViewChecked(){
+  }
+}
+
+
+child.html
+
+`<h1>Hello {{name}} && hello {{parentData}}!</h1>
+  <ng-content></ng-content>
+
+parent.ts
+
+import { Component, VERSION } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { count } from 'rxjs/operators';
+@Component({
+  selector: 'my-app',
+  templateUrl: './app.component.html',
+  styleUrls: [ './app.component.css' ]
+})
+export class AppComponent  {
+  name = 'Angular ' + VERSION.major;
+  employeeFormGroup:FormGroup;
+  cnt=0;
+  dateTime;
+  toggle=true;
+  employeeName:string;
+  constructor(){
+    this.employeeFormGroup=new FormGroup({
+      name: new FormControl(),
+      email: new FormControl()
+    });
+  }
+  //gets called when initialization occurs
+  ngOnInit(){
+  }
+makeToggle(){
+  this.toggle=!this.toggle
+}
+  //
+  submitEmployee(){
+  console.log(this.employeeFormGroup.get("name").value)
+  }
+  resetForm(){
+  this.employeeFormGroup.reset();
+  }
+}
+
+parent.html
+
+<hello [parentData]="employeeName" *ngIf="toggle"hello name="{{ name }}">
+<p #projectedContent>content projected from parent</p>
+</hello>
+  <form [formGroup]="employeeFormGroup" (ngSubmit)="submitEmployee()">
+    Name
+    <input [(ngModel)]= "employeeName" type="text" formControlName="name"/><br/>
+    Email
+    <input type="email" formControlName="email"/><br/>
+    Entered name is {{employeeName}}
+    <button type="submit"> Add Employee</button>
+    <button (click)="resetForm()"> Reset</button>
+    <p >Date is {{dateTime | date:'hh:mm:ss a'}}</p>
+    <button (click)="makeToggle()">toggle child</button>
+  </form>
+-----------------------------
+#myptag => it is a template reference variable
+e.g. <hello-app #myprojectedcontent ></hello-app>
+
+-----------------------------------
+jasmine->karma->protractor->selenium
+-------------------------------------
+what is new in angular 10
+=>common js imports, bug fixes, strict type, ngcc 
